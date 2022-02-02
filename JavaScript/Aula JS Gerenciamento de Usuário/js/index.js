@@ -3,36 +3,73 @@ document.querySelector('#salvar').addEventListener('click', () => {
 
     let fields = document.querySelectorAll('#form-user-create [name]');
 
+    let isValid = true;
+
     fields.forEach((field, index) => {
-        if (field.name == 'admin') {
-            if (field.checked) {
-                user[field.name] = 'Sim';
+        if (field.name == 'name') {
+            if (field.value == '') {
+                isValid = false;
+                field.parentElement.classList.add('has-error');
             }
             else {
-                user[field.name] = 'Não';
+                field.parentElement.classList.remove('has-error');
             }
         }
-        else if (field.name == 'gender') {
-            if (field.checked) {
+        if (field.name == 'email') {
+            if (field.value == '') {
+                isValid = false;
+                field.parentElement.classList.add('has-error');
+            }
+            else {
+                field.parentElement.classList.remove('has-error');
+            }
+        }
+        if (field.name == 'password') {
+            if (field.value == '') {
+                isValid = false;
+                field.parentElement.classList.add('has-error');
+            }
+            else {
+                field.parentElement.classList.remove('has-error');
+            }
+        }
+
+        if (isValid) {
+            if (field.name == 'admin') {
+                if (field.checked) {
+                    user[field.name] = 'Sim';
+                }
+                else {
+                    user[field.name] = 'Não';
+                }
+            }
+            else if (field.name == 'gender') {
+                if (field.checked) {
+                    user[field.name] = field.value;
+                }
+            }
+            else {
                 user[field.name] = field.value;
             }
         }
-        else {
-            user[field.name] = field.value;
-        }
     });
 
-    let tr = document.createElement('tr');
-    tr.innerHTML = `
-        <td>Foto</td>
-        <td>Nome</td>
-        <td>Email</td>
-        <td>Admin</td>
-        <td>Criado em</td>
-        <td>Ações</td>
-    `;
-    // Adiciona dentro da tabela a linha com as colunas
-    document.querySelector('#table-users').appendChild(tr);
+    if (isValid) {
+        let tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><img src="dist/img/user1-128x128.jpg" alt="Imagem do usuário" class="img-sm img-circle"></td>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${user.admin}</td>
+            <td>${new Date().toLocaleDateString()}</td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm">Editar</button>
+                <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+            </td>
+        `;
+        // Adiciona dentro da tabela a linha com as colunas
+        document.querySelector('#table-users').appendChild(tr);
+    }
 });
 
 /*let nome = document.querySelector('#exampleInputName').value;
