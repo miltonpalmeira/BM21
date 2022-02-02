@@ -4,8 +4,15 @@ document.querySelector('#salvar').addEventListener('click', () => {
     let fields = document.querySelectorAll('#form-user-create [name]');
 
     fields.forEach((field, index) => {
-        if ()
-        if (field.name == 'gender') {
+        if (field.name == 'admin') {
+            if (field.checked) {
+                user[field.name] = 'Sim';
+            }
+            else {
+                user[field.name] = 'Não';
+            }
+        }
+        else if (field.name == 'gender') {
             if (field.checked) {
                 user[field.name] = field.value;
             }
