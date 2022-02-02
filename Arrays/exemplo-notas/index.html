@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo Notas alunos</title>
+</head>
+<body>
+    <form>
+        <label for="txt-nota1">Digite a primeira nota:</label>
+        <input type="text" name="txt-nota1" id="txt-nota1">
+        <label for="txt-nota2">Digite a segunda nota:</label>
+        <input type="text" name="txt-nota2" id="txt-nota2">
+        <label for="txt-nota3">Digite a terceira nota:</label>
+        <input type="text" name="txt-nota3" id="txt-nota3">
+        <label for="txt-nota4">Digite a quarta nota:</label>
+        <input type="text" name="txt-nota4" id="txt-nota4">
+
+        <button type="button" id="btn-calcular">Calcular</button>
+        
+        <table>
+            <tbody id="tab-notas">
+                <tr id="linha-notas"></tr>
+            </tbody>
+        </table>
+        <p id="resultado"></p>
+    </form>
+    <script src="js/index.js"></script>
+</body>
+</html>
