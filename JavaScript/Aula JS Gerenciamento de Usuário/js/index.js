@@ -1,3 +1,5 @@
+selectAll();
+
 document.querySelector('#salvar').addEventListener('click', () => {
     let user = { };
 
@@ -64,13 +66,77 @@ document.querySelector('#salvar').addEventListener('click', () => {
             <td>${new Date().toLocaleDateString()}</td>
             <td>
                 <button type="button" class="btn btn-primary btn-sm">Editar</button>
-                <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+                <button type="button" class="btn btn-danger btn-sm btn-delete" data-toggle="modal" data-target="#modalExcluir">Excluir</button>
             </td>
         `;
         // Adiciona dentro da tabela a linha com as colunas
         document.querySelector('#table-users').appendChild(tr);
+
+        // Limpar os campos
+        document.querySelector('#form-user-create').reset();
+        
+        updateCount();
+        addEventsTr(tr);
+        insert(JSON.stringify(user));
     }
 });
+
+// Função para contabilizar todos os usuários e administradores
+function updateCount() {
+    let numberUsers = 0;
+    let numberAdmin = 0;
+
+    [...document.querySelector('#table-users').children].forEach((tr => {
+        numberUsers++;
+        if (tr.children[3].innerHTML == 'Sim') {
+            numberAdmin++;
+        }
+    }));
+
+    document.querySelector('#number-users').innerHTML = numberUsers;
+    document.querySelector('#number-users-admin').innerHTML = numberAdmin;
+}
+
+// Função para adicionar as funções dos botões exlcuir e alterar
+function addEventsTr(tr) {
+    tr.querySelector('.btn-delete').addEventListener('click', () => {
+        // Adicionar um MODAL do Boostrap ao invés do CONFIRM
+        document.querySelector('#confirmar-exclusao').addEventListener('click', () => {
+            tr.remove();
+            updateCount();
+            $('#modalExcluir').modal('hide');
+        });
+    });
+}
+
+// Função para adicionar os dados no SESSIONSTORAGE
+function insert(dataUser) {
+    let users = [];
+
+    // Se xistir algum valor no SessionStorage
+    // adicionar esse valor no array como JSON
+    if (sessionStorage.getItem('users')) {
+        users = JSON.parse(sessionStorage.getItem('users'));
+    }
+
+    users.push(dataUser);
+
+    sessionStorage.setItem('users', JSON.stringify(users));
+}
+
+function selectAll() {
+    let users = [];
+
+    if (sessionStorage.getItem('users')) {
+        users = JSON.parse(sessionStorage.getItem('users'));
+    }
+
+    // Passar usuário por usuário e adicionar uma nova linha na tabela
+    users.forEach(user => {
+        console.log(user);
+        // Inserir os dados retornados na tabela
+    });
+}
 
 /*let nome = document.querySelector('#exampleInputName').value;
 let genero = document.querySelector('input[name=gender]:checked').value;
